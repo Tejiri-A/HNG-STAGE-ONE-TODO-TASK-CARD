@@ -217,7 +217,7 @@ main {
   border-radius: var(--radius-sm);
   border-left: 3px solid var(--clr-primary-500);
   padding-inline: var(--space-8);
-  max-width: 30rem;
+  width: min(100%, 30rem);
 
   @media screen and (min-width: 48em) {
     padding-inline: var(--space-4);
@@ -338,6 +338,134 @@ main {
   }
 }
 
+.flex-container {
+  display: flex;
+  gap: var(--space-2);
+  flex-direction: column;
+
+  @media screen and (min-width: 45em) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* EDIT FORM */
+.todo__form {
+  width: 100%;
+}
+
+.todo__form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+  width: 100%;
+}
+
+.todo__form-field label {
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--clr-primary-800);
+
+  @media screen and (min-width: 48em) {
+    font-size: var(--font-base);
+  }
+}
+
+.todo__form-field input,
+.todo__form-field textarea,
+.todo__form-field select {
+  width: 100%;
+  padding: var(--space-2) var(--space-2);
+  border: 1px solid var(--clr-tertiary-200);
+  border-radius: var(--radius-md);
+  color: var(--clr-primary-900);
+  background-color: var(--clr-tertiary-50);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  @media screen and (min-width: 48em) {
+    padding: var(--space-2) var(--space-4);
+  }
+}
+
+.todo__form-field input::placeholder,
+.todo__form-field textarea::placeholder {
+  color: var(--clr-tertiary-400);
+}
+
+.todo__form-field input:focus,
+.todo__form-field textarea:focus,
+.todo__form-field select:focus {
+  outline: 2px solid var(--clr-primary-400);
+  outline-offset: 1px;
+  border-color: var(--clr-primary-400);
+  box-shadow: 0 0 0 3px rgba(0, 82, 204, 0.12);
+}
+
+.todo__form-field textarea {
+  min-height: 5rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.todo__form-field select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23797390' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-2) center;
+  padding-right: var(--space-8);
+  cursor: pointer;
+}
+
+/* Button row */
+.todo__form > .flex-container {
+  margin-top: var(--space-4);
+}
+
+.todo__form-btn {
+  width: 100%;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--clr-primary-400);
+  font-weight: 500;
+  font-size: var(--font-sm);
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease,
+    box-shadow 0.25s ease;
+
+  @media screen and (min-width: 45em) {
+    width: auto;
+    min-width: 6rem;
+  }
+}
+
+.todo__form-btn:focus-visible {
+  outline: 2px solid var(--clr-primary-400);
+  outline-offset: 2px;
+}
+
+.btn--primary {
+  background-color: var(--clr-primary-400);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background-color: var(--clr-primary-600);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 82, 204, 0.25);
+}
+
+.btn--secondary {
+  background-color: transparent;
+  color: var(--clr-primary-900);
+}
+
+.btn--secondary:hover {
+  background-color: var(--clr-neutral-50);
+  color: var(--clr-primary-800);
+}
+
 .todo__caterories {
   display: flex;
   gap: var(--space-1);
@@ -380,11 +508,12 @@ main {
   text-transform: uppercase;
 }
 
-.todo__datetime time{
+.todo__datetime time {
   text-transform: uppercase;
 }
 
-.todo__due-date, .todo__remainingTime {
+.todo__due-date,
+.todo__remainingTime {
   font-weight: 600;
   color: var(--clr-neutral-700);
   font-size: var(--font-sm);

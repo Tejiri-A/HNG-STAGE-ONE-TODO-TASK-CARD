@@ -91,7 +91,7 @@
               aria-label="mark as done"
             />
           </div>
-          <div>
+          <div class="todo__content" style="display: none">
             <h2 class="todo__title" data-testid="test-todo-title">
               Finalize Design System Implementation
             </h2>
@@ -110,6 +110,53 @@
               <li class="todo__category">DevOps</li>
               <li class="todo__category">Accessibility</li>
             </ul>
+          </div>
+          <div class="todo__form" data-testid="test-todo-edit-form">
+            <div class="todo__form-field">
+              <label for="title">Title</label>
+              <input
+                type="text"
+                name="title"
+                data-testid="test-todo-edit-title-input"
+              />
+            </div>
+            <div class="todo__form-field">
+              <label for="description">Description</label>
+              <textarea
+                name="description"
+                id="description"
+                data-testid="test-todo-edit-description-input"
+              ></textarea>
+            </div>
+
+            <div class="flex-container">
+              <div class="todo__form-field">
+                <label for="priority">Priority</label>
+                <select
+                  name="priority"
+                  id="priority"
+                  data-testid="test-todo-edit-priority-select"
+                >
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+              <div class="todo__form-field">
+                <label for="dueDate">Due Date</label>
+                <input
+                  type="date"
+                  name="dueDate"
+                  id="dueDate"
+                  data-testid="test-todo-edit-due-date-input"
+                />
+              </div>
+            </div>
+
+            <div class="flex-container">
+              <button type="submit" class="todo__form-btn btn--primary">Save</button>
+              <button type="button" class="todo__form-btn btn--secondary">Cancel</button>
+            </div>
           </div>
         </section>
         <footer class="todo__footer">
@@ -132,7 +179,7 @@
           </p>
         </footer>
       </article>
- 
+
       <article class="todo" data-testid="test-todo-card" data-taskid="002">
         <header class="todo__header">
           <div class="todo__info">
@@ -348,7 +395,6 @@
           </p>
         </footer>
       </article>
-
-     </main>
- </body>
- </html>
+    </main>
+  </body>
+</html>
