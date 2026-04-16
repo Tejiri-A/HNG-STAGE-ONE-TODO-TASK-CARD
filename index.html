@@ -33,7 +33,13 @@
             <span class="todo__status todo__status--pending" aria-live="polite">
               Pending
             </span>
-            <select name="status" id="todoStatusControl" data-testid="test-todo-status-control" class="todo__status-control" >
+            <select
+              name="status"
+              id="todoStatusControl"
+              data-testid="test-todo-status-control"
+              class="todo__status-control"
+              aria-label="update status"
+            >
               <option value="pending">Pending</option>
               <option value="in progress">In Progress</option>
               <option value="done">Done</option>
@@ -102,17 +108,30 @@
           </div>
           <div class="todo__content">
             <h2 class="todo__title" data-testid="test-todo-title">
-              Finalize Design System Implementation
+              Accessibility testing
             </h2>
-            <p class="todo__description" data-testid="test-todo-description">
-              Audit the current UI components for accessibility, refine the
-              color palette variables for better contrast, and document the new
-              state color tokens for the development team.
-            </p>
+            <div
+              class="todo__collapsible-container"
+              data-testid="test-todo-collapsible-section"
+            >
+              <p class="todo__description" data-testid="test-todo-description">
+                Audit the existing UI component library for strict adherence to
+                WCAG 2.1 AA accessibility standards, focusing specifically on
+                keyboard navigation patterns and screen reader compatibility
+                across multiple browsers. This also includes a comprehensive
+                refinement of the color palette variables to ensure they meet
+                minimum contrast ratios for all state variants, including hover,
+                focus, and disabled states. Furthermore, document the updated
+                design tokens in the centralized wiki, providing clear usage
+                guidelines for the development team to ensure long-term
+                maintainability and visual consistency across all forthcoming
+                platform features and legacy module updates.
+              </p>
+            </div>
 
             <ul
               role="list"
-              class="todo__caterories"
+              class="todo__categories"
               data-testid="test-todo-tags"
             >
               <li class="todo__category">Design</li>
@@ -212,10 +231,17 @@
             <span class="todo__priority" data-testid="test-todo-priority"
               >Medium</span
             >
-            <span class="todo__status todo__status--in-progress" aria-live="polite">
+            <span
+              class="todo__status todo__status--in-progress"
+              aria-live="polite"
+            >
               In Progress
             </span>
-            <select name="status" class="todo__status-control" data-testid="test-todo-status-control">
+            <select
+              name="status"
+              class="todo__status-control"
+              data-testid="test-todo-status-control"
+            >
               <option value="pending">Pending</option>
               <option value="in progress">In Progress</option>
               <option value="done">Done</option>
@@ -286,13 +312,18 @@
             <h2 class="todo__title" data-testid="test-todo-title">
               Refactor API Data Layer
             </h2>
-            <p class="todo__description" data-testid="test-todo-description">
-              Migrate current fetch calls to a centralized handler to improve
-              error handling and data consistency.
-            </p>
+            <div
+              class="todo__collapsible-container"
+              data-testid="test-todo-collapsible-section"
+            >
+              <p class="todo__description" data-testid="test-todo-description">
+                Migrate current fetch calls to a centralized handler to improve
+                error handling and data consistency.
+              </p>
+            </div>
             <ul
               role="list"
-              class="todo__caterories"
+              class="todo__categories"
               data-testid="test-todo-tags"
             >
               <li class="todo__category">Backend</li>
@@ -388,8 +419,14 @@
             <span class="todo__priority" data-testid="test-todo-priority"
               >Low</span
             >
-            <span class="todo__status todo__status--pending" aria-live="polite"> Pending </span>
-            <select name="status" class="todo__status-control" data-testid="test-todo-status-control">
+            <span class="todo__status todo__status--pending" aria-live="polite">
+              Pending
+            </span>
+            <select
+              name="status"
+              class="todo__status-control"
+              data-testid="test-todo-status-control"
+            >
               <option value="pending">Pending</option>
               <option value="in progress">In Progress</option>
               <option value="done">Done</option>
@@ -460,13 +497,18 @@
             <h2 class="todo__title" data-testid="test-todo-title">
               Update User Documentation
             </h2>
-            <p class="todo__description" data-testid="test-todo-description">
-              Review README.md and internal wiki for latest deployment
-              instructions.
-            </p>
+            <div
+              class="todo__collapsible-container"
+              data-testid="test-todo-collapsible-section"
+            >
+              <p class="todo__description" data-testid="test-todo-description">
+                Review README.md and internal wiki for latest deployment
+                instructions.
+              </p>
+            </div>
             <ul
               role="list"
-              class="todo__caterories"
+              class="todo__categories"
               data-testid="test-todo-tags"
             >
               <li class="todo__category">Docs</li>

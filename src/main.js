@@ -60,6 +60,9 @@ class Task {
       '[data-testid="test-todo-edit-button"]',
     );
     this.deleteBtn = taskEl.querySelector('[data-testid="test-todo--button"]');
+    // this.collapseBtn = taskEl.querySelector(
+    //   'data-testid="test-todo-expand-toggle"',
+    // );
 
     // TODO status control
     this.statusControlEl = taskEl.querySelector(".todo__status-control");
@@ -67,12 +70,15 @@ class Task {
     // Save original status and class to revert correctly
     this.originalStatus = this.statusEl.innerText;
     this.originalClass = this.statusEl.className;
+    this.timerId = null;
 
     this.init();
   }
 
   init() {
     this.dueDate = new Date(this.dueDateEl.getAttribute("datetime"));
+
+    this.collapseDescription();
 
     // Event Listeners
     this.checkboxEl.addEventListener("change", () => this.handleStatusChange());
@@ -104,8 +110,8 @@ class Task {
     // });
 
     // Initial check
-    // this.handleStatusChange();
     this.updateRemainingTime();
+    this.startTimer();
     this.populateForm();
   }
 
@@ -138,14 +144,24 @@ class Task {
     this.priorityValueEl.textContent = todoData.priority;
     this.priorityIndicatorEl.className = `todo__priority-indicator todo__priority-indicator--${todoData.priority}`;
 
+    this.collapseDescription();
     this.toggleEditMode(false);
   }
 
   updateStatus(e) {
     const newStatus = e.target.value;
-    this.checkboxEl.checked = newStatus === "done"
-    this.statusEl.textContent = newStatus
+    this.checkboxEl.checked = newStatus === "done";
+    this.statusEl.textContent = newStatus;
     this.statusEl.className = `todo__status todo__status--${newStatus.replace(" ", "-")}`;
+
+    if (newStatus === "done") {
+      this.stopTimer();
+      this.timeRemainingEl.innerText = "Completed";
+      this.timeRemainingEl.style.color = "var(--clr-success-600)";
+    } else {
+      this.updateRemainingTime();
+      this.startTimer();
+    }
   }
 
   toggleEditMode(show) {
@@ -156,13 +172,33 @@ class Task {
     } else {
       this.contentEl.style.display = "block";
       this.formEl.style.display = "none";
-      this.editBtn.focus()
+      this.editBtn.focus();
     }
   }
 
   updateRemainingTime() {
+    if (this.statusControlEl && this.statusControlEl.value === "done") {
+      this.timeRemainingEl.innerText = "Completed";
+      this.timeRemainingEl.style.color = "var(--clr-success-600)";
+      this.stopTimer();
+      return;
+    }
     const timeElapsed = this.calculateRemainingTime();
     this.timeRemainingEl.innerText = timeElapsed;
+  }
+
+  startTimer() {
+    if (this.timerId) return; // Already running
+    this.timerId = setInterval(() => {
+      this.updateRemainingTime();
+    }, 60000);
+  }
+
+  stopTimer() {
+    if (this.timerId) {
+      clearInterval(this.timerId);
+      this.timerId = null;
+    }
   }
 
   handleStatusChange() {
@@ -172,14 +208,69 @@ class Task {
       this.statusEl.className = "todo__status todo__status--done";
       this.titleEl.style.textDecoration = "line-through";
       this.titleEl.style.opacity = "0.6";
-      this.statusControlEl.value = "done"
+      this.statusControlEl.value = "done";
+
+      this.stopTimer();
+      this.timeRemainingEl.innerText = "Completed";
+      this.timeRemainingEl.style.color = "var(--clr-success-600)";
     } else {
       this.checkboxEl.setAttribute("aria-label", "mark as done");
       this.statusEl.textContent = "pending";
       this.statusEl.className = "todo__status todo__status--pending";
       this.titleEl.style.textDecoration = "none";
       this.titleEl.style.opacity = "1";
-      this.statusControlEl.value = this.originalStatus.trim().toLowerCase()
+      this.statusControlEl.value = this.originalStatus.trim().toLowerCase();
+
+      this.updateRemainingTime();
+      this.startTimer();
+    }
+  }
+
+  collapseDescription() {
+    const collapseContainer = this.taskEl.querySelector(
+      ".todo__collapsible-container",
+    );
+    if (!collapseContainer) return;
+
+    // Remove existing button if any
+    const existingBtn = collapseContainer.querySelector(".todo__collapse-btn");
+    if (existingBtn) existingBtn.remove();
+
+    const charCount = this.descriptionEl.textContent.trim().length;
+
+    if (charCount > 120) {
+      this.descriptionEl.classList.add("todo__description--collapsed");
+      collapseContainer.insertAdjacentHTML(
+        "beforeend",
+        `<button type="button" class="todo__collapse-btn" data-testid="test-todo-expand-toggle" aria-label="Show more" aria-expanded="false" aria-controls="collapsibleContainer">
+                Show more
+              </button>`,
+      );
+      this.collapseBtn = collapseContainer.querySelector(".todo__collapse-btn");
+      this.collapseBtn.addEventListener("click", () => this.toggleCollapse());
+    } else {
+      this.descriptionEl.classList.remove("todo__description--collapsed");
+      this.collapseBtn = null;
+    }
+  }
+
+  toggleCollapse() {
+    if (!this.collapseBtn) return;
+
+    const isCollapsed = this.descriptionEl.classList.contains(
+      "todo__description--collapsed",
+    );
+
+    if (isCollapsed) {
+      this.descriptionEl.classList.remove("todo__description--collapsed");
+      this.collapseBtn.textContent = "Collapse";
+      this.collapseBtn.setAttribute("aria-label", "Collapse description");
+      this.collapseBtn.setAttribute("aria-expanded", "true");
+    } else {
+      this.descriptionEl.classList.add("todo__description--collapsed");
+      this.collapseBtn.textContent = "Show more";
+      this.collapseBtn.setAttribute("aria-label", "Show more");
+      this.collapseBtn.setAttribute("aria-expanded", "false");
     }
   }
 
@@ -254,3 +345,4 @@ initTasks();
 
 // Global access to re-init if new tasks are added later
 window.initTasks = initTasks;
+

@@ -249,7 +249,7 @@ main {
   }
 }
 
-.todo__priority-indicator{
+.todo__priority-indicator {
   --size: 1rem;
   width: var(--size);
   height: var(--size);
@@ -258,13 +258,13 @@ main {
   display: inline-block;
 }
 
-.todo__priority-indicator--low{
+.todo__priority-indicator--low {
   background-color: var(--clr-success-600);
 }
-.todo__priority-indicator--medium{
+.todo__priority-indicator--medium {
   background-color: var(--clr-primary-600);
 }
-.todo__priority-indicator--high{
+.todo__priority-indicator--high {
   background-color: var(--clr-error-600);
 }
 
@@ -349,12 +349,20 @@ main {
 .todo__description {
   color: var(--clr-tertiary-800);
   font-weight: 400;
-  margin-bottom: var(--space-8);
+  /* margin-bottom: var(--space-8); */
   font-size: var(--font-sm);
 
   @media screen and (min-width: 48em) {
     font-size: var(--font-base);
   }
+}
+
+.todo__description--collapsed {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .flex-container {
@@ -400,7 +408,9 @@ main {
   border-radius: var(--radius-md);
   color: var(--clr-primary-900);
   background-color: var(--clr-tertiary-50);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 
   @media screen and (min-width: 48em) {
     padding: var(--space-2) var(--space-4);
@@ -450,7 +460,9 @@ main {
   font-weight: 500;
   font-size: var(--font-sm);
   cursor: pointer;
-  transition: background-color 0.25s ease, color 0.25s ease,
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
     box-shadow 0.25s ease;
 
   @media screen and (min-width: 45em) {
@@ -485,7 +497,7 @@ main {
   color: var(--clr-primary-800);
 }
 
-.todo__caterories {
+.todo__categories {
   display: flex;
   gap: var(--space-1);
   flex-wrap: wrap;
@@ -541,4 +553,23 @@ main {
   @media screen and (min-width: 48em) {
     font-size: var(--font-base);
   }
+}
+
+.todo__collapsible-container{
+  margin-bottom: var(--space-4);
+}
+
+.todo__collapse-btn{
+  background: none;
+  border: none;
+  font-size: var(--font-sm);
+  color: var(--clr-primary-400);
+  text-decoration: underline;
+  cursor: pointer;
+  
+}
+
+.todo__collapse-btn:hover,
+.todo__collapse-btn:focus {
+  color: var(--clr-primary-600);
 }
